@@ -1,5 +1,6 @@
 ##### PRELIMINARY INFO #####
 # Substitute `pod-fr-retail.demobestbuy.products` for `project_id.dataset.table`
+# Substitute `pod-fr-retail.demobestbuy.products_distinct` for `project_id.dataset.destination_table`
 
 #### STEPS ####
 #Get the number of distinct ids and number of rows
