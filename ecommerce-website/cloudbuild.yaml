@@ -1,0 +1,16 @@
+steps:
+#- name: node
+#  entrypoint: npm
+#  args: ['install']
+# Build the container image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'europe-west1-docker.pkg.dev/pod-fr-retail/ecommerceproductdiscovery/ecommerceproddisc', '.']
+# Push the container image to Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'europe-west1-docker.pkg.dev/pod-fr-retail/ecommerceproductdiscovery/ecommerceproddisc']
+# Deploy container image to Cloud Run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args: ['run', 'deploy', 'ecommerce', '--image', 'europe-west1-docker.pkg.dev/pod-fr-retail/ecommerceproductdiscovery/ecommerceproddisc', '--region', 'europe-west1', '--port', '3000']
+images:
+- 'europe-west1-docker.pkg.dev/pod-fr-retail/ecommerceproductdiscovery/ecommerceproddisc'
