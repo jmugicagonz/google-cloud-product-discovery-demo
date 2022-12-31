@@ -2,6 +2,10 @@
 ##### PRELIMINARY INFO #####
 # Substitute `table name` for `project_id.dataset.source_table`
 # Substitute `pod-fr-retail.demobestbuy.template` for `project_id.dataset.destination_table`
+# Uncomment #FROM `table name`;
+# Replace at least the values for id and title, which are required
+# Rating -> averageRating can not be null
+# Promotions -> promotionid id can not be empty string ("")
 
 ##### TEMPLATE #####
 CREATE OR REPLACE TABLE `pod-fr-retail.demobestbuy.template`
@@ -71,3 +75,4 @@ AS SELECT
   ,NULL #publishTime
   ,NULL; #promotions [STRUCT(CAST(NULL AS STRING) AS promotion_id)]
 #FROM `table name`;
+
