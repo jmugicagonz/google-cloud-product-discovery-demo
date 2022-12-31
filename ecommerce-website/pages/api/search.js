@@ -13,7 +13,6 @@
 // limitations under the License.
 
 //Import the retail service client to perform requests
-import { resolve } from "styled-jsx/css";
 import { searchServiceClient } from "../../constants/constants";
 
 const callSearch = async ( toquery ) => {  

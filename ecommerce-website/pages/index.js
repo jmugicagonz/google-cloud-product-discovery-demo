@@ -19,8 +19,6 @@ import { useState } from 'react'
 
 const theme = createTheme();
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
 export default function Home() {
   const[resultsFound,setResultsFound] = useState()
   console.log(["results found: ",resultsFound])

@@ -1,16 +1,15 @@
+#To call this cloudbuild, use a command like: 
+#gcloud builds submit --config=cloudbuild.yaml --region=_YOUR_DEFINED_REGION_ --project=_YOUR_PROJECT_ID_ --substitutions=_NAME_REPO_ART_REG=_YOUR_REPO_ARTIFACT_REGISTRY_
 steps:
-#- name: node
-#  entrypoint: npm
-#  args: ['install']
 # Build the container image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'europe-west1-docker.pkg.dev/pod-fr-retail/ecommerceproductdiscovery/ecommerceproddisc', '.']
+  args: ['build', '-t', '$LOCATION-docker.pkg.dev/$PROJECT_ID/${_NAME_REPO_ART_REG}/ecommerceproddisc', '.']
 # Push the container image to Container Registry
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'europe-west1-docker.pkg.dev/pod-fr-retail/ecommerceproductdiscovery/ecommerceproddisc']
+  args: ['push', '$LOCATION-docker.pkg.dev/$PROJECT_ID/${_NAME_REPO_ART_REG}/ecommerceproddisc']
 # Deploy container image to Cloud Run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
-  args: ['run', 'deploy', 'ecommerce', '--image', 'europe-west1-docker.pkg.dev/pod-fr-retail/ecommerceproductdiscovery/ecommerceproddisc', '--region', 'europe-west1', '--port', '3000']
+  args: ['run', 'deploy', 'ecommerce', '--image', '$LOCATION-docker.pkg.dev/$PROJECT_ID/${_NAME_REPO_ART_REG}/ecommerceproddisc','--region','$LOCATION','--port', '3000']
 images:
-- 'europe-west1-docker.pkg.dev/pod-fr-retail/ecommerceproductdiscovery/ecommerceproddisc'
+- '$LOCATION-docker.pkg.dev/$PROJECT_ID/${_NAME_REPO_ART_REG}/ecommerceproddisc'
