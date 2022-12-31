@@ -21,11 +21,11 @@ export default function ProductCard({ product }) {
                     {product.title}
                 </Typography>}
                 {product.description && <Typography>
-                    {product.description}
+                    {product.description.length>50?product.description.substr(0,130)+"...":product.description}
                 </Typography>}
             </CardContent>
             <CardActions>
-            {product.uri && <Button href={product.uri} size="small" rel="noopener" target="_blank">View</Button>}
+            {product.uri && <Button href={product.uri} size="small" rel="noopener" target="_blank">View Details</Button>}
             </CardActions>
         </Card>
     )

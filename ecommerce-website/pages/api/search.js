@@ -31,7 +31,7 @@ const callSearch = async ( toquery ) => {
   const visitorId = '11111'; //TODO: assign a real visitorId
 
   // Maximum number of Products to return.
-  const pageSize = 10;
+  const pageSize = 12;
 
   const IResponseParams = {
   ISearchResult: 0,

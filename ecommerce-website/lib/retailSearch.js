@@ -21,6 +21,7 @@ export const searchQuery = async (query) => {
         promises.push(element)
     }
     let products = await Promise.all(promises)
+    products = products.filter(item => item != undefined)
     return products;
     } catch (err) {
         console.log(err);
