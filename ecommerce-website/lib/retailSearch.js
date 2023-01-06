@@ -7,7 +7,8 @@ export const searchQuery = async (query) => {
         });
         const searchResult = JSON.parse((await res.json()));
     //  Get array with results' names. Depending on if the product has variants or not, return the name of the product or the name of the first variant
-    let resultsNames = searchResult.results.map((result) => {
+    console.log(["search result",searchResult.results])
+    /*let resultsNames = searchResult.results.map((result) => {
         if(result.product.variants.length>0) {
                 return(result.product.variants[0].name);
             }
@@ -20,7 +21,14 @@ export const searchQuery = async (query) => {
         const element = getProductDetails(name)
         promises.push(element)
     }
-    let products = await Promise.all(promises)
+    let products = await Promise.all(promises)*/
+    let products = searchResult.results.map((result) => {
+        if(result.product.variants.length>0) {
+            return(result.product.variants[0])
+        }
+        else {
+            return(result.product)
+        }});
     products = products.filter(item => item != undefined)
     return products;
     } catch (err) {
