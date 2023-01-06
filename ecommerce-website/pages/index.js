@@ -15,13 +15,16 @@ import SearchRS from '../components/SearchRS';
 import { ScopedCssBaseline } from '@mui/material';
 import ProductCard from '../components/ProductCard';
 import { useState } from 'react'
+import TemporaryDrawer from '../components/Drawer';
 
 
 const theme = createTheme();
 
 export default function Home() {
   const[resultsFound,setResultsFound] = useState()
+  const[facetsFound,setFacetsFound] = useState()
   console.log(["results found: ",resultsFound])
+  console.log(["facets found: ",facetsFound])
 
   return (
     <>
@@ -42,16 +45,23 @@ export default function Home() {
               pb: 6,
               }}
           >
-              <SearchRS setResults={setResultsFound}/>
+              <SearchRS setResults={setResultsFound} setFacets={setFacetsFound}/>
           </Box>
           {resultsFound && <Container sx={{ pb: 6 }} maxWidth="md">
-              <Typography gutterBottom variant="h5" component="h2">
-                  Products found
-              </Typography>
+              <Box sx={{ 
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                alignContent: 'center',
+            }}>
+                <div>Results Found</div>
+                <TemporaryDrawer facets={facetsFound}/>
+              </Box>
               {/* End hero unit */}
               <Grid container spacing={2}>
               {resultsFound?.map((result) => (
-                  <Grid item key={result.id} xs={12} sm={6} md={4}>
+                  <Grid item key={result.id} xs={12} sm={6} md={3}>
                     <ProductCard product={result}/>
                   </Grid>
               ))}
@@ -63,3 +73,10 @@ export default function Home() {
     </>
   )
 }
+
+
+/*
+                <Typography gutterBottom variant="button" component="h2" display="block">
+                    Products found
+                </Typography>
+*/

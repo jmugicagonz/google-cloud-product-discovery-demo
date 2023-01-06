@@ -17,11 +17,11 @@ export default function ProductCard({ product }) {
             alt="productMainImage"
             />}
             <CardContent sx={{ flexGrow: 1 }}>
-                {product.title && <Typography gutterBottom variant="h6" component="h2">
-                    {product.title}
+                {product.title && <Typography gutterBottom variant="subtitle2" component="h2">
+                    {product.title.length>75?product.title.substr(0,75)+"...":product.title}
                 </Typography>}
-                {product.description && <Typography>
-                    {product.description.length>50?product.description.substr(0,130)+"...":product.description}
+                {product.description && <Typography variant="body2">
+                    {product.description.length>130?product.description.substr(0,130)+"...":product.description}
                 </Typography>}
             </CardContent>
             <CardActions>

@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import { useState } from 'react'
 import { searchQuery } from '../lib/retailSearch';
 
-export default function SearchRS( { setResults } ) {
+export default function SearchRS( { setResults, setFacets } ) {
   const [formInput, setFormInput] = useState("");
   const handleChange = (event) => {
     setFormInput(event.target.value);
@@ -11,7 +11,13 @@ export default function SearchRS( { setResults } ) {
   };
   const handleSummit = async (event) => {
     event.preventDefault();
-    await searchQuery(formInput).then((results) => setResults(results))
+    await searchQuery(formInput).then((response) => {
+      if(response) {
+        console.log(["response",response])
+        setResults(response.results)
+        setFacets(response.facets)
+      }
+    })
   };
   return (
     <Box

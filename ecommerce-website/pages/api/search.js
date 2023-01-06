@@ -14,9 +14,13 @@
 
 //Import the retail service client to perform requests
 import { searchServiceClient } from "../../constants/constants";
+//Import facet specifications for faceted search. If empty, no facets are returned.
+import { facetSpecs } from "../../constants/facets";
 
-const callSearch = async ( toquery ) => {  
-
+const callSearch = async ( body ) => {
+  //Transform body into JSON
+  const bodyJSON = JSON.parse(body);
+  console.log(["bodyJSON",bodyJSON]);
   //Get projectId from the retail service client
   const projectId = await searchServiceClient.getProjectId();
 
@@ -25,13 +29,24 @@ const callSearch = async ( toquery ) => {
   const placement = `projects/${projectId}/locations/global/catalogs/default_catalog/servingConfigs/default_serving_config`;
 
   // Raw search query.
-  const query = toquery;
+  const query = bodyJSON.query;
 
   // A unique identifier for tracking visitors.
   const visitorId = '11111'; //TODO: assign a real visitorId
 
   // Maximum number of Products to return.
   const pageSize = 12;
+
+  /**
+   *  The filter syntax consists of an expression language for constructing a
+   *  predicate from one or more fields of the products being filtered. Filter
+   *  expression is case-sensitive. See more details at this user
+   *  guide (https://cloud.google.com/retail/docs/filter-and-order#filter).
+   *  If this field is unrecognizable, an INVALID_ARGUMENT is returned.
+   */
+  const tofilter = bodyJSON.filter;
+  const filter = `${tofilter.colors?`colors: ANY(`+tofilter.colors+`)`:``}`;
+  console.log(["filter",filter])
 
   const IResponseParams = {
   ISearchResult: 0,
@@ -45,6 +60,8 @@ const callSearch = async ( toquery ) => {
       query: query,
       visitorId: visitorId,
       pageSize: pageSize,
+      facetSpecs: facetSpecs,
+      filter: filter
   };
 
   // Run request
@@ -78,21 +95,3 @@ export default async function handler(req, res) {
       });
   });
 };
-
-
-
-
-/*export default function handler(req, res) {
-  //Call search function with the query provided in the body
-  callSearch(req.body).then((results) => {
-    //console.log(["Results from search are: ",results])
-    return(
-      res.status(200).json({ data : results})
-      
-      )
-  });
-  process.on('unhandledRejection', err => {
-    console.error(err.message);
-    process.exitCode = 1;
-  });
-}*/

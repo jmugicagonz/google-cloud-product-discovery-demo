@@ -3,9 +3,16 @@ export const searchQuery = async (query) => {
     try {
         const res = await fetch('/api/search',{
             method: "POST",
-            body: query
-        });
+            body: JSON.stringify({
+                "query": query,
+                "filter": {
+                    //"colors": [`\"Noir\"`,`\"Bleu\"`,`\"Beige\"`]
+                }
+            })
+            }
+        );
         const searchResult = JSON.parse((await res.json()));
+    let facets = searchResult.facets
     //  Get array with results' names. Depending on if the product has variants or not, return the name of the product or the name of the first variant
     let resultsNames = searchResult.results.map((result) => {
         if(result.product.variants.length>0) {
@@ -22,7 +29,13 @@ export const searchQuery = async (query) => {
     }
     let products = await Promise.all(promises)
     products = products.filter(item => item != undefined)
-    return products;
+    console.log(["facets",facets])
+    console.log(["products",products])
+    const response = {
+        "facets": facets,
+        "results": products
+    }
+    return response;
     } catch (err) {
         console.log(err);
     }
@@ -35,21 +48,8 @@ export const getProductDetails = async (name) => {
             body: name
         });
 	    const searchResult = JSON.parse(await res.json());
-        //const element = fillInfo(searchResult.id,searchResult.images[0].uri,searchResult.description,searchResult.uri,searchResult.title)
         return searchResult;
     } catch (err) {
         console.log(err);
     }
   }
-
-export const fillInfo = (id, image, description, uri, title) => {
-return (
-    {
-        id: id,
-        image: image,
-        description: description,
-        uri: uri,
-        title: title
-    }
-)
-}
