@@ -11,7 +11,7 @@ export default function ProductCard({ product }) {
         <Card
             sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
         >
-            {product.images && <CardMedia
+            {product.images[0] && <CardMedia
             component="img"
             image={product.images[0].uri}
             alt="productMainImage"
