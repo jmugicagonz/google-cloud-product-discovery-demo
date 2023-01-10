@@ -1,13 +1,14 @@
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react'
-import { searchQuery } from '../lib/retailSearch';
+import { searchQuery, autocomplete } from '../lib/retailSearch';
 
 export default function SearchRS( { setResults } ) {
   const [formInput, setFormInput] = useState("");
   const handleChange = (event) => {
     setFormInput(event.target.value);
     //TODO: Implement here the autocomplete
+    autocomplete(event.target.value)
   };
   const handleSummit = async (event) => {
     event.preventDefault();

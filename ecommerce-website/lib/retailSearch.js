@@ -36,6 +36,21 @@ export const searchQuery = async (query) => {
     }
 };
 
+// Function to perform autocomplete
+export const autocomplete = async (query) => {
+    try {
+        const res = await fetch('/api/complete-query',{
+            method: "POST",
+            body: query
+        });
+	    /*const searchResult = JSON.parse(await res.json());
+        return searchResult;*/
+    } catch (err) {
+        console.log(err);
+    }
+  }
+
+// Function to get details of a certain product
 export const getProductDetails = async (name) => {
     try {
         const res = await fetch('/api/product-details',{
@@ -43,21 +58,8 @@ export const getProductDetails = async (name) => {
             body: name
         });
 	    const searchResult = JSON.parse(await res.json());
-        //const element = fillInfo(searchResult.id,searchResult.images[0].uri,searchResult.description,searchResult.uri,searchResult.title)
         return searchResult;
     } catch (err) {
         console.log(err);
     }
   }
-
-export const fillInfo = (id, image, description, uri, title) => {
-return (
-    {
-        id: id,
-        image: image,
-        description: description,
-        uri: uri,
-        title: title
-    }
-)
-}

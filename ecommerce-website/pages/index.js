@@ -15,6 +15,8 @@ import SearchRS from '../components/SearchRS';
 import { ScopedCssBaseline } from '@mui/material';
 import ProductCard from '../components/ProductCard';
 import { useState } from 'react'
+import SearchAutocomplete from '../components/SearchAutocomplete';
+import GoogleMaps from '../components/GoogleMaps';
 
 
 const theme = createTheme();
@@ -41,8 +43,9 @@ export default function Home() {
               pt: 6,
               pb: 6,
               }}
+              align="center"
           >
-              <SearchRS setResults={setResultsFound}/>
+              <SearchAutocomplete setResults={setResultsFound}/>
           </Box>
           {resultsFound && <Container sx={{ pb: 6 }} maxWidth="md">
               <Typography gutterBottom variant="h5" component="h2">
