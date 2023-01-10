@@ -15,6 +15,8 @@ import SearchRS from '../components/SearchRS';
 import { ScopedCssBaseline } from '@mui/material';
 import ProductCard from '../components/ProductCard';
 import { useState } from 'react'
+import Stack from '@mui/material/Stack';
+import UploadButton from '../components/uploadButton';
 
 
 const theme = createTheme();
@@ -42,7 +44,10 @@ export default function Home() {
               pb: 6,
               }}
           >
+            <Stack direction="row" alignItems="center" justifyContent="center" spacing={2}>
               <SearchRS setResults={setResultsFound}/>
+              <UploadButton />
+            </Stack>
           </Box>
           {resultsFound && <Container sx={{ pb: 6 }} maxWidth="md">
               <Typography gutterBottom variant="h5" component="h2">
@@ -63,3 +68,12 @@ export default function Home() {
     </>
   )
 }
+
+/**
+ * 
+ * 
+ *             <Stack direction="row" alignItems="center" spacing={2}>
+              <SearchRS setResults={setResultsFound}/>
+              <UploadButton />
+            </Stack>
+ */
